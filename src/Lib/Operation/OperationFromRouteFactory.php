@@ -10,6 +10,7 @@ use Exception;
 use phpDocumentor\Reflection\DocBlock;
 use phpDocumentor\Reflection\DocBlockFactory;
 use SwaggerBake\Lib\Annotation\SwagOperation;
+use SwaggerBake\Lib\Annotation\SwagOperationId;
 use SwaggerBake\Lib\OpenApi\Operation;
 use SwaggerBake\Lib\OpenApi\Schema;
 use SwaggerBake\Lib\Route\RouteDecorator;
@@ -62,11 +63,22 @@ class OperationFromRouteFactory
             return null;
         }
 
+        $swagOperationId = array_filter($annotations, function ($a) {
+            return $a instanceof SwagOperationId;
+        });
+
+        if(count($swagOperationId) > 0) {
+            $swag = array_pop($swagOperationId);
+            $operationId = $swag->name;
+        } else {
+            $operationId = $route->getName() . ':' . strtolower($httpMethod);
+        }
+
         $operation = (new Operation())
             ->setSummary($docBlock->getSummary())
             ->setDescription($docBlock->getDescription()->render())
             ->setHttpMethod(strtolower($httpMethod))
-            ->setOperationId($route->getName() . ':' . strtolower($httpMethod));
+            ->setOperationId($operationId);
 
         $operation = $this->getOperationWithTags($operation, $route, $annotations);
 
