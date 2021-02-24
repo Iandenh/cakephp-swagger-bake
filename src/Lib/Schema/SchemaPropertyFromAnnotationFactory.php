@@ -41,6 +41,7 @@ class SchemaPropertyFromAnnotationFactory
             'exclusiveMaximum',
             'exclusiveMinimum',
             'uniqueItems',
+            'items',
             'maxProperties',
             'minProperties',
             'example',

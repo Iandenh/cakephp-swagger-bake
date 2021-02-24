@@ -29,6 +29,7 @@ namespace SwaggerBake\Lib\Annotation;
  * @Attribute("maxItems",  type = "integer"),
  * @Attribute("minItems",  type = "integer"),
  * @Attribute("uniqueItems",  type = "bool"),
+ * @Attribute("items",  type = "array"),
  * @Attribute("maxProperties",  type = "integer"),
  * @Attribute("minProperties", type = "integer"),
  * @Attribute("enum", type = "array"),
@@ -42,4 +43,8 @@ namespace SwaggerBake\Lib\Annotation;
  */
 class SwagEntityAttribute extends AbstractSchemaProperty
 {
+    /**
+     * @var string
+     */
+    public $items;
 }
